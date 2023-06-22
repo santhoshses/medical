@@ -1,0 +1,15 @@
+import { ActionTypes } from "../constants/action-types";
+
+const initialState = {
+  accessToken:"eyJhbGciOiJSUzUxMiIsImtpZCI6Im9wZW5lZHgifQ.eyJhdWQiOiAib3BlbmVkeCIsICJleHAiOiAxNjg3NDE2NTk1LCAiZ3JhbnRfdHlwZSI6ICJwYXNzd29yZCIsICJpYXQiOiAxNjg3NDEyOTk1LCAiaXNzIjogImh0dHBzOi8vaG1xYS5tZWRhY2VjaW4uaW4vb2F1dGgyIiwgInByZWZlcnJlZF91c2VybmFtZSI6ICI5OTAwMDEyMzQ1IiwgInNjb3BlcyI6IFsicmVhZCIsICJ3cml0ZSIsICJlbWFpbCIsICJwcm9maWxlIl0sICJ2ZXJzaW9uIjogIjEuMi4wIiwgInN1YiI6ICI4ZjM2YjNiOWYzYmEzNzY1MzM1ZDM0ZDBhMzFmZjg2YiIsICJmaWx0ZXJzIjogWyJ1c2VyOm1lIl0sICJpc19yZXN0cmljdGVkIjogZmFsc2UsICJlbWFpbF92ZXJpZmllZCI6IHRydWUsICJlbWFpbCI6ICJ0ZXN0dXNlcjFAbWFuaXBhbC5jb20iLCAibmFtZSI6ICJUZXN0VXNlcjEiLCAiZmFtaWx5X25hbWUiOiAiVXNlcjEiLCAiZ2l2ZW5fbmFtZSI6ICJUZXN0IiwgImFkbWluaXN0cmF0b3IiOiBmYWxzZSwgInN1cGVydXNlciI6IGZhbHNlfQ.An1BSn7avtebUsntM8DM_lPCOeEXfzsmHOdPwyJGHM-H9rcPXzVeYKSvTEe-xYU9cJIbY2oQOOJ4d3prZAT4urvEhulix_U1Kc3IvCDICViTpFSkQF6rHjjs72UapbBjLh3B2a3fJ6mj5LY-r_Hd8BtU6Z_Ep5HPy8O7_rDB-aFughcVKM2Au63qgREFy7i12DVqHlNV6mmmWnOLhj1a3D09FohEY9VR4hgRJFmaz3Jc3z5cbKueQ3g1-DrVhx46fnFYS3WOd7WGf52fEpnwgWWy3lGkM7XIaxZmavW-VmVc10zyYU_JsTANKo9Ae4rzbpP9_wXvR5rwAvFB6rKQlQ"
+};
+export const userReducer = (state = initialState, { type, payload }) => {
+  console.log(payload)
+  switch (type) {
+    case ActionTypes.SET_ACCESS_TOKEN:
+      return {...state,accessToken:payload};
+
+    default:
+      return state;
+  }
+};

@@ -1,0 +1,97 @@
+html *
+{
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+}
+.question-selector-container {
+  // max-width: 300px;
+  margin: 0 auto;
+  .grid-row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content:space-between;
+    margin-left: 9px;
+  }
+
+  .grid-item {
+    -ms-flex: auto;
+    position: relative;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .grid-item-wrapper {
+    -webkit-box-sizing: initial;
+    -moz-box-sizing: initial;
+    box-sizing: initial;
+    // background: #aaa;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    -webkit-transition: padding 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+      margin 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: padding 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+      margin 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  .grid-item-container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  .grid-item:hover .grid-item-wrapper {
+    padding: 2% 2%;
+    margin: -2% -2%;
+  }
+  .question-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-family: "Times";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 1333px) {
+    .grid-item {
+      flex-basis: 33.33%;
+    }
+  }
+
+  @media (max-width: 1073px) {
+    .grid-item {
+      flex-basis: 33.33%;
+    }
+  }
+
+  @media (max-width: 815px) {
+    .grid-item {
+      flex-basis: 50%;
+    }
+  }
+
+  @media (max-width: 555px) {
+    .grid-item {
+      flex-basis: 100%;
+    }
+  }
+}
+
+
+
+
+
+
+
+
