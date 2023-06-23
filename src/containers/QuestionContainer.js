@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import QuestionSelectorContainer from "./QuestionSelectorContainer";
-import { setQuestions } from "../redux/actions/questionActions";
+import { fetchQuestionSummary } from "../redux/actions/courseActions";
 import { useParams } from "react-router-dom";
 
 import QuestionSummaryComponent from "../components/QuestionSummaryComponent";
@@ -58,14 +58,26 @@ const QuestionContainer = () => {
   const { questions } = storeData["allQuestions"];
   console.log(questions)
   const dispatch = useDispatch();
-  const fetchQuestions = async () => {
-    dispatch(setQuestions());
-  };
-
+  
   useEffect(() => {
-    fetchQuestions();
-    return () => {};
+    dispatch(fetchQuestionSummary());
+    const unloadCallback = (event) => {
+      event.preventDefault();
+      event.returnValue = "Data will be lost if you leave the page, are you sure?";
+      return "";
+    };
+    window.addEventListener("beforeunload", unloadCallback);
+    
+    
+    
+    
+    return () => {
+      window.removeEventListener("beforeunload", unloadCallback);
+    
+    }
+    
   }, []);
+
   useEffect(() => {
     setcurrentQuestion(storeData["allQuestions"].question);
   }, [storeData]);
