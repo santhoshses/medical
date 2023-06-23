@@ -8,7 +8,8 @@ import {
   QuestionAnsweredMarkedReviewSmall,
 } from "../StyledIcons";
 
-const QuestionSummaryComponent = () => {
+const QuestionSummaryComponent = ({questionStatusCount}) => {
+  
   const GridContainer = styled.div`
     display: flex;
     height: 32vh;
@@ -50,13 +51,13 @@ const QuestionSummaryComponent = () => {
       <GridRow>
         <GridCell>
           <QuestionAnsweredSmall>
-            <span className="text">100</span>
+            <span className="text">{questionStatusCount.questionAnswered}</span>
           </QuestionAnsweredSmall>
           <p>Answered</p>
         </GridCell>
         <GridCell>
           <QuestionNotAnsweredSmall>
-            <span className="text">1</span>
+            <span className="text">{questionStatusCount.questionNotAnswered}</span>
           </QuestionNotAnsweredSmall>
           <p>NotAnswered</p>
         </GridCell>
@@ -64,13 +65,13 @@ const QuestionSummaryComponent = () => {
       <GridRow>
         <GridCell>
           <QuestionNotVisitedSmall>
-            <span className="text">100</span>
+            <span className="text">{questionStatusCount.questionNotVisited}</span>
           </QuestionNotVisitedSmall>
           <p>Not Visited</p>
         </GridCell>
         <GridCell>
           <QuestionMarkedReviewSmall>
-            <span className="text">200</span>
+            <span className="text">{questionStatusCount.questionMarkedReview}</span>
           </QuestionMarkedReviewSmall>
           <p>Marked for Review</p>
         </GridCell>
@@ -78,7 +79,7 @@ const QuestionSummaryComponent = () => {
       <GridRow>
         <GridCell style={{ border: "0px" }}>
           <QuestionAnsweredMarkedReviewSmall style={{display: "flex"}}>
-            <span className="text">233</span>
+            <span className="text">{questionStatusCount.questionAnsweredMarkedReview}</span>
           </QuestionAnsweredMarkedReviewSmall>
           <p style={{display: "flex",flex:5,marginLeft:"5px"}}>Answered & Marked for Review (will NOT be considered for evaluation</p>
         </GridCell>

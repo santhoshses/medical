@@ -27,22 +27,21 @@ border-top: 1px solid #bababa;
       margin: 0 0px 0px 41px;
     }
   }
-  }
   `;
-const FooterComponent = ({ question }) => {
-  console.log(question);
+
+const FooterComponent = ({clearCallBack,savecallBack}) => {
   return (
     <FooterPanel>
-         <div className="left">
-          <ButtonOutlined variant="outlined">
-            Mark for Review & Next
-          </ButtonOutlined>
-          <ButtonOutlined variant="outlined">Clear Response</ButtonOutlined>
-        </div>
-        <div className="right">
-          <ButtonContained variant="contained">Save & Next</ButtonContained>
-          <ButtonContained variant="contained">Submit</ButtonContained>
-        </div>
+      <div className="left">
+        <ButtonOutlined variant="outlined">
+          Mark for Review & Next
+        </ButtonOutlined>
+        <ButtonOutlined onClick={clearCallBack} variant="outlined">Clear Response</ButtonOutlined>
+      </div>
+      <div className="right">
+        <ButtonContained onClick={savecallBack} variant="contained">Save & Next</ButtonContained>
+        <ButtonContained variant="contained">Submit</ButtonContained>
+      </div>
     </FooterPanel>
   );
 };

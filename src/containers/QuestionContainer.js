@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import QuestionSelectorContainer from "./QuestionSelectorContainer";
-import { fetchQuestionSummary } from "../redux/actions/courseActions";
+import {
+  fetchQuestionSummary,
+  getCurrentQuestion,
+  saveCurrentQuestion
+} from "../redux/actions/courseActions";
 import { useParams } from "react-router-dom";
 
 import QuestionSummaryComponent from "../components/QuestionSummaryComponent";
 import QuestionSectionComponent from "../components/QuestionSectionComponent";
 import HeaderContainer from "./HeaderContainer";
+import { getQuestionStatusCount } from "../util";
 
 import FooterComponent from "../components/FooterComponent";
 const PageWrapper = styled.div`
@@ -46,60 +51,115 @@ const Aside = styled.aside`
   }
 `;
 
-
 const Footer = styled.footer`
   /**Any style for footer wrapper level can be applied here */
 `;
 
 const QuestionContainer = () => {
   let { questionId } = useParams();
-  const storeData = useSelector((state) => state);
-  const [currentQuestion, setcurrentQuestion] = useState(questionId);
-  const { questions } = storeData["allQuestions"];
-  console.log(questions)
-  const dispatch = useDispatch();
+  const [questionStatusCount, setQuestionStatusCount] = React.useState({});
+  const [answerVal, setAnswerVal] = React.useState("");
+  const [markGuess, setMarkGuess] = React.useState(false);
+
+  const storeTestData = useSelector((state) => state?.testDetails);
+  const testData = storeTestData?.courseTestDetail?.testTopics;
+  const courseSummaryData = storeTestData?.courseSummaryData;
   
+  let topicData = [];
+  if (testData?.topics && testData.topics.length) {
+    topicData = testData.topics[0];
+  }
+  const [currentQuestion, setcurrentQuestion] = useState({});
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(fetchQuestionSummary());
+    dispatch(fetchQuestionSummary(topicData.id, topicData.progress.id));
+    setQuestionStatusCount(getQuestionStatusCount(courseSummaryData));
+    dispatch(
+      getCurrentQuestion(topicData.id, topicData.progress.id, topicData.qid)
+    );
     const unloadCallback = (event) => {
       event.preventDefault();
-      event.returnValue = "Data will be lost if you leave the page, are you sure?";
+      event.returnValue =
+        "Data will be lost if you leave the page, are you sure?";
       return "";
     };
     window.addEventListener("beforeunload", unloadCallback);
-    
-    
-    
-    
+
     return () => {
       window.removeEventListener("beforeunload", unloadCallback);
-    
-    }
-    
+    };
   }, []);
 
   useEffect(() => {
-    setcurrentQuestion(storeData["allQuestions"].question);
-  }, [storeData]);
-
+    setQuestionStatusCount(
+      getQuestionStatusCount(storeTestData?.courseSummaryData)
+    );
+    if (storeTestData.currentQuestion && storeTestData.currentQuestion.length) {
+      setcurrentQuestion(storeTestData.currentQuestion[0]);
+    }
+  }, [storeTestData]);
+  useEffect(() => {
+    dispatch(
+      getCurrentQuestion(topicData.id, topicData.progress.id, questionId)
+    );
+  }, [questionId]);
+  const updateAnswer = (ev) => {
+    if (ev.target.type == "radio") {
+      setAnswerVal(ev.target.value);
+    } else {
+      setMarkGuess(ev.target.checked);
+    }
+  };
+  const clearCallBack = (ev) => {
+    setAnswerVal("");
+    setMarkGuess(false);
+  };
+  const saveNextQuestion = ()=>{
+    const pblockid = courseSummaryData[questionId-1].pblockid;
+    let data = {
+      "is_guessed": markGuess,
+      "is_marked_view": false,
+      "is_skip": answerVal ? false :true,
+      "answer": answerVal
+    }
+    dispatch(
+      saveCurrentQuestion(pblockid, storeTestData?.courseTestDetail?.courseId, data)
+    );
+    clearCallBack();
+    
+  }
   return (
     <PageWrapper>
-    <HeaderContainer />
+      <HeaderContainer />
       <MainWrapper>
         <Article>
-          <QuestionSectionComponent question={currentQuestion} />
+          {currentQuestion && currentQuestion.qid && (
+            <QuestionSectionComponent
+              handleAnswerChange={updateAnswer}
+              question={currentQuestion}
+              answerVal={answerVal}
+              markGuess={markGuess}
+            />
+          )}
         </Article>
         <Aside>
           <div className="summary-grid-wrapper">
-            <QuestionSummaryComponent question={currentQuestion} />
+            {questionStatusCount && (
+              <QuestionSummaryComponent
+                questionStatusCount={questionStatusCount}
+              />
+            )}
           </div>
           <div className="questionGridHeader">All Questions</div>
           <p>Choose a Question</p>
-          <QuestionSelectorContainer allQuestions={questions} />
+          {courseSummaryData && (
+            <QuestionSelectorContainer allQuestions={courseSummaryData} />
+          )}
         </Aside>
       </MainWrapper>
       <Footer>
-          <FooterComponent />
+        <FooterComponent savecallBack={saveNextQuestion} clearCallBack={clearCallBack} />
       </Footer>
     </PageWrapper>
   );
