@@ -20,10 +20,27 @@ export const setCourseDetails = () => {
         "Authorization" : "JWT "+localStorage.getItem("AccessToken")
       }
     }).then(response=>{
-      dispatch({
-        type: ActionTypes.SET_ACCESS_TOKEN,
-        payload: response.data,
-      })
+      let courseId = response?.data?.courses.length ? response.data.courses[0].id : "";
+      axios.get("https://hmqa.medacecin.in/learn/api/v1/course/test/"+courseId,{
+        headers: {
+          "Authorization" : "JWT "+localStorage.getItem("AccessToken")
+        }
+      }).then(response=>{
+        let res = response?.data.length ? response?.data[0].chapters:[];
+        if(res.length){
+          let payload = {
+            courseId,
+            testTopics:res.filter(item=>item.title=="Grand Test")[0]
+          }
+          dispatch({
+            type: ActionTypes.SET_COURSE_TEST_DETAILS,
+            payload
+          })
+        }
+     
+     
+      }).catch(error=>{console.log(error)})
+   
     }).catch(error=>{console.log(error)})
   }
   
