@@ -3,6 +3,7 @@ import { Container, Grid, Box, Tab, Card } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useDispatch, useSelector } from "react-redux";
 import { styled } from "styled-components";
+import HomePageModal from '../components/common/modal/templates/HomePageModal';
 import logo from "../assets/png/logo.png";
 import cardIcon from "../assets/png/Group.svg";
 import { setCourseDetails, startTest } from "../redux/actions/courseActions";
@@ -159,6 +160,8 @@ const HomeContainer = () => {
   // const [value, setValue] = React.useState('1');
   const storeData = useSelector((state) => state);
   const testData = storeData.testDetails?.courseTestDetail?.testTopics;
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState(null);
 
   let topicData=[];
   if(testData?.topics && testData.topics.length){
@@ -173,9 +176,11 @@ const HomeContainer = () => {
   const handleChange = (event, newValue) => {
     // setValue(newValue);
   };
-  const handleClick = () => {
+  const handleClick = (status) => {
     dispatch(startTest(topicData.id,topicData.progress.id));
-    navigate("/question/1");
+    setModalType(status);
+    setShowModal(true);
+    // navigate("/question/1");
 }
 
   return (
@@ -225,7 +230,7 @@ const HomeContainer = () => {
         <TabPanel value="1">
           {testData?.topics?.map((data) => {
             return (
-              <div onClick={handleClick} className="card-main-container">
+              <div onClick={()=>handleClick(data.status)} className="card-main-container">
                 <div className="card-container">
                   <Card variant="outlined">
                     <Grid container className="card-content">
@@ -269,8 +274,9 @@ const HomeContainer = () => {
             );
           })}
         </TabPanel>
-        <TabPanel value="2">Item Two</TabPanel>
+        {/* <TabPanel value="2">Item Two</TabPanel> */}
       </TabContext>
+      <HomePageModal open={showModal} handleClose={()=>setShowModal(false)} modalType={modalType} />
     </StyledHomeContent>
   );
 };

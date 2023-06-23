@@ -1,7 +1,8 @@
 import {Container, Grid, Box, Tab, Card, TextField} from '@mui/material';
 import { useState } from 'react';
 import { styled } from "styled-components";
-import { MuiOtpInput } from 'mui-one-time-password-input'
+import { MuiOtpInput } from 'mui-one-time-password-input';
+import { useNavigate } from "react-router-dom";
 import { ButtonOutlined, ButtonContained } from '../components/common/ButtonComponent';
 import Timer from '../components/common/Timer';
 import editIcon from '../assets/svg/ic_edit.svg';
@@ -59,6 +60,7 @@ const LoginCardComponent = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [mobileNumber, setMobileNumber] = useState('');
     const [otp, setOtp] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (newValue) => {
         setOtp(newValue)
@@ -94,7 +96,7 @@ const LoginCardComponent = () => {
                     </Grid>
                 </Grid>
                 <div className='login-btn-container'>
-                    <ButtonOutlined disabled={otp.length === 4 ? false : true} className="login-btn" onClick={() => {window.location.href='/home'}}>Verify</ButtonOutlined>
+                    <ButtonOutlined disabled={otp.length === 4 ? false : true} className="login-btn" onClick={() => {navigate('/home')}}>Verify</ButtonOutlined>
                 </div>
             </>
         );

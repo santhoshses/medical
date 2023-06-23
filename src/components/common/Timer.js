@@ -1,24 +1,32 @@
 import { useState, useEffect } from "react";
 
 const Timer = ({minutes=0, seconds=0,onComplete}) => {
-    const timeInSeconds = minutes*60 + seconds;
-    const [timerVal, setTimerVal] = useState(timeInSeconds);
-    // useEffect(() => {
-        setInterval(()=>{
-            if(timerVal !== 0){
-                setTimerVal(timerVal-1);
+    const [minutes1, setMinutes] = useState(minutes);
+    const [seconds1, setSeconds] = useState(seconds);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          if (seconds1 > 0) {
+            setSeconds(seconds1 - 1);
+          }
+          if (seconds1 === 0) {
+            if (minutes1 === 0) {
+              clearInterval(interval);
+            } else {
+              setSeconds(59);
+              setMinutes(minutes1 - 1);
             }
-            
+          }
         }, 1000);
-    // }, []);
+        return () => {
+          clearInterval(interval);
+        };
+      }, [seconds1]);
     
-    const secondVal = timerVal % 60;
-    const minutesVal = Math.floor(timerVal / 60);
-    // setTimeout(()=>{
-    //     clearInterval(timerInstance)
-    // }, timeInSeconds)
     return (
-        <span key={secondVal}>{minutesVal}:{secondVal}</span>
+        <>
+            <span>{minutes1}:{seconds1}</span>
+        </>
     )
 }
 
