@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import { questionReducer } from "./QuestionReducer";
-import { userReducer } from "./UserReducer";
+import { courseReducer } from "./CourseReducer";
 
 const reducers = combineReducers({
   allQuestions: questionReducer,
-  userData:userReducer
+  testDetails:courseReducer
 });
 
 export default reducers;

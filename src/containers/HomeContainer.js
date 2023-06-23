@@ -135,26 +135,31 @@ const StyledHomeContent = styled.div`
     .card-main-container {
         margin: 8px 0;
     }
-    .badge-Live {
+    .badge-0 {
         background: #E95757;
     }
-    .badge-Upcoming {
+    .badge-5 {
+        background: #E95757;
+    }
+    .badge-4 {
         background: #646E82;
         opacity: 0.6;
     }
-    .badge-Completed {
+    .badge-3 {
         background: #15AF5B;
         opacity: 0.6;
     }
-    .badge-Expired {
+    .badge-6 {
         background: #F37559;
         opacity: 0.6;
     }
 `;
 
 const HomeContainer = () => {
-    const [value, setValue] = React.useState('1');
+    // const [value, setValue] = React.useState('1');
     const storeData = useSelector((state) => state);
+    const testData = storeData.testDetails?.courseTestDetail?.testTopics;
+    console.log(storeData.testDetails.courseTestDetail.testTopics)
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setCourseDetails());
@@ -162,7 +167,7 @@ const HomeContainer = () => {
     
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        // setValue(newValue);
     };
 
     const examArr = [
@@ -201,19 +206,19 @@ const HomeContainer = () => {
                     Scheduled Tests
                 </Container>
             </div>
-                <TabContext value={value}>
+                <TabContext value={'1'}>
                     <div className='heading-background-tabs'>
                         <Container>
                             <Box sx={{ width: '100%', typography: 'body1' }}>
                                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                                     <Tab className='tab-header' label="Grand Tests" value="1" />
-                                    <Tab className='tab-header' label="New Tests" value="2" />
+                                    {/* <Tab className='tab-header' label="New Tests" value="2" /> */}
                                 </TabList>
                             </Box>
                         </Container>
                     </div>
                         <TabPanel value="1">
-                            {examArr.map((eachArr) => {
+                            {testData?.topics?.map((data) => {
                                 return (
                                     <div className='card-main-container'>
                                         <div className='card-container'>
@@ -223,12 +228,12 @@ const HomeContainer = () => {
                                                         <img src={cardIcon} className='card-img' />
                                                     </Grid>
                                                     <Grid className='card-main-content'>
-                                                        <div className='card-main-content-header'>{eachArr.heading}</div>
-                                                        <div className='card-main-content-sub-header'>{eachArr.subHeading}</div>
-                                                        <div className='card-main-content-link'>{eachArr.timeLine}</div>
+                                                        <div className='card-main-content-header'>{data.title}</div>
+                                                        <div className='card-main-content-sub-header'>{data.qcount} MCQs | {data.duration} mins</div>
+                                                        <div className='card-main-content-link'>{data.qcount}</div>
                                                     </Grid>
                                                 </Grid>
-                                                <div className={`card-badge badge-${eachArr.status}`}>{eachArr.status}</div>
+                                                <div className={`card-badge badge-${data.status}`}>{"Live"}</div>
                                             </Card>
                                         </div>
                                     </div>
