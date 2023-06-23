@@ -8,7 +8,7 @@ const QuestionSelectorContainer = ({allQuestions}) => {
   return (
     <div style={{ maxHeight: "35vh", overflow: "auto"}} className="question-selector-container">
       <div className="grid-row">
-      {allQuestions?.map(question=>(<QuestionSelectorComponent key={question.id} selectedQuestionId={questionId} question={question}/>))}
+      {allQuestions?.map(question=>(<QuestionSelectorComponent key={question.qid} selectedQuestionId={questionId} question={question}/>))}
       </div>
     </div>
   );
