@@ -1,4 +1,5 @@
 import "./App.scss";
+import React, { useEffect, useState } from "react";
 import QuestionContainer from "./containers/QuestionContainer";
 import ScheduledTests from "./containers/ScheduledTests";
 import QuestionSelector from "./containers/QuestionSelectorContainer";
@@ -20,6 +21,20 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //   </SplitScreen>;
 // }
 function App() {
+
+  useEffect(() => {
+    
+    const rightClickCallback = (event)=>{
+      event.preventDefault()
+    }
+    // window.addEventListener('contextmenu', rightClickCallback);
+    return () => {
+      window.removeEventListener("contextmenu", rightClickCallback);
+    
+    }
+    
+  }, []);
+
   return (
       <Router>
         <Routes >

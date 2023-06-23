@@ -3,7 +3,7 @@ import { useSelector,useDispatch} from "react-redux";
 import { styled } from "styled-components";
 
 import { Outlet, Link } from "react-router-dom";
-import { selectedQuestion } from "../redux/actions/questionActions";
+import { selectedQuestion } from "../redux/actions/courseActions";
 import { QuestionNotAnswered, QuestionAnswered, QuestionNotVisited, QuestionMarkedReview, QuestionAnsweredMarkedReview } from "../StyledIcons";
 
 const QuestionSelectorComponent = ({ question, selectedQuestionId }) => {
