@@ -132,12 +132,8 @@ export const saveCurrentQuestion = ( pblock_id, course_id, data) => {
     pblock_id,
     course_id,
     ...data
-    // is_guessed,
-    // is_marked_view,
-    // is_skip,
-    // answer
   };
- console.log(payload,"__________________________________________++++++++++++++++++")
+ 
   const headers = {
     "Content-Type": "application/json",
     "Authorization": "JWT " + localStorage.getItem("AccessToken"),
@@ -146,7 +142,6 @@ export const saveCurrentQuestion = ( pblock_id, course_id, data) => {
     axios
       .post("https://hmqa.medacecin.in/learn/api/v1/mcq/test/save", payload, {headers:headers})
       .then((response) => {
-      
       })
       .catch((error) => {
         console.log(error);

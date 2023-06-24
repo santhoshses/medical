@@ -5,7 +5,7 @@ import QuestionSelectorContainer from "./QuestionSelectorContainer";
 import {
   fetchQuestionSummary,
   getCurrentQuestion,
-  saveCurrentQuestion
+  saveCurrentQuestion,
 } from "../redux/actions/courseActions";
 import { useParams } from "react-router-dom";
 
@@ -13,6 +13,7 @@ import QuestionSummaryComponent from "../components/QuestionSummaryComponent";
 import QuestionSectionComponent from "../components/QuestionSectionComponent";
 import HeaderContainer from "./HeaderContainer";
 import { getQuestionStatusCount } from "../util";
+import { useNavigate } from "react-router-dom";
 
 import FooterComponent from "../components/FooterComponent";
 const PageWrapper = styled.div`
@@ -57,14 +58,16 @@ const Footer = styled.footer`
 
 const QuestionContainer = () => {
   let { questionId } = useParams();
+  const navigate = useNavigate();
   const [questionStatusCount, setQuestionStatusCount] = React.useState({});
   const [answerVal, setAnswerVal] = React.useState("");
   const [markGuess, setMarkGuess] = React.useState(false);
 
   const storeTestData = useSelector((state) => state?.testDetails);
+  const storeCurrentQuestion = useSelector((state) => state?.testDetails.currentQuestion);
   const testData = storeTestData?.courseTestDetail?.testTopics;
   const courseSummaryData = storeTestData?.courseSummaryData;
-  
+
   let topicData = [];
   if (testData?.topics && testData.topics.length) {
     topicData = testData.topics[0];
@@ -99,11 +102,25 @@ const QuestionContainer = () => {
       setcurrentQuestion(storeTestData.currentQuestion[0]);
     }
   }, [storeTestData]);
+
   useEffect(() => {
-    dispatch(
-      getCurrentQuestion(topicData.id, topicData.progress.id, questionId)
-    );
+    // clearCallBack();
+    // setTimeout(() => {
+      setAnswerVal(currentQuestion.userAnswer);
+      setMarkGuess(currentQuestion.guess);
+    // }, 1000);
+  }, [currentQuestion]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(
+        getCurrentQuestion(topicData.id, topicData.progress.id, questionId)
+      );
+      dispatch(fetchQuestionSummary(topicData.id, topicData.progress.id));
+      
+    }, 500);
   }, [questionId]);
+
   const updateAnswer = (ev) => {
     if (ev.target.type == "radio") {
       setAnswerVal(ev.target.value);
@@ -112,23 +129,29 @@ const QuestionContainer = () => {
     }
   };
   const clearCallBack = (ev) => {
+    // alert()
     setAnswerVal("");
     setMarkGuess(false);
   };
-  const saveNextQuestion = ()=>{
-    const pblockid = courseSummaryData[questionId-1].pblockid;
+  const saveNextQuestion = (marked_review = false) => {
+    const pblockid = courseSummaryData[questionId - 1].pblockid;
+    const nextQuestionId = parseInt(questionId) + 1;
     let data = {
-      "is_guessed": markGuess,
-      "is_marked_view": false,
-      "is_skip": answerVal ? false :true,
-      "answer": answerVal
-    }
+      is_guessed: markGuess,
+      is_marked_view: marked_review,
+      is_skip: answerVal ? false : true,
+      answer: answerVal,
+    };
     dispatch(
-      saveCurrentQuestion(pblockid, storeTestData?.courseTestDetail?.courseId, data)
+      saveCurrentQuestion(
+        pblockid,
+        storeTestData?.courseTestDetail?.courseId,
+        data
+      )
     );
-    clearCallBack();
-    
-  }
+    // clearCallBack();
+    navigate("/question/" + nextQuestionId);
+  };
   return (
     <PageWrapper>
       <HeaderContainer />
@@ -154,12 +177,18 @@ const QuestionContainer = () => {
           <div className="questionGridHeader">All Questions</div>
           <p>Choose a Question</p>
           {courseSummaryData && (
-            <QuestionSelectorContainer allQuestions={courseSummaryData} />
+            <QuestionSelectorContainer
+              savecallBack={saveNextQuestion}
+              allQuestions={courseSummaryData}
+            />
           )}
         </Aside>
       </MainWrapper>
       <Footer>
-        <FooterComponent savecallBack={saveNextQuestion} clearCallBack={clearCallBack} />
+        <FooterComponent
+          savecallBack={saveNextQuestion}
+          clearCallBack={clearCallBack}
+        />
       </Footer>
     </PageWrapper>
   );

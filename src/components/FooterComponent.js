@@ -33,13 +33,13 @@ const FooterComponent = ({clearCallBack,savecallBack}) => {
   return (
     <FooterPanel>
       <div className="left">
-        <ButtonOutlined variant="outlined">
+        <ButtonOutlined onClick={()=>{savecallBack(true)}}  variant="outlined">
           Mark for Review & Next
         </ButtonOutlined>
-        <ButtonOutlined onClick={clearCallBack} variant="outlined">Clear Response</ButtonOutlined>
+        <ButtonOutlined onClick={()=>clearCallBack()} variant="outlined">Clear Response</ButtonOutlined>
       </div>
       <div className="right">
-        <ButtonContained onClick={savecallBack} variant="contained">Save & Next</ButtonContained>
+        <ButtonContained onClick={()=>{savecallBack(false)}}  variant="contained">Save & Next</ButtonContained>
         <ButtonContained variant="contained">Submit</ButtonContained>
       </div>
     </FooterPanel>

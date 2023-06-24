@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import QuestionSelectorComponent from "../components/QuestionSelectorComponent";
 import { useParams } from "react-router-dom";
 
-const QuestionSelectorContainer = ({allQuestions}) => {
+const QuestionSelectorContainer = ({allQuestions, savecallBack}) => {
   let { questionId } = useParams();
   return (
     <div style={{ maxHeight: "35vh", overflow: "auto"}} className="question-selector-container">
       <div className="grid-row">
-      {allQuestions?.map(question=>(<QuestionSelectorComponent key={question.qid} selectedQuestionId={questionId} question={question}/>))}
+      {allQuestions?.map(question=>(<QuestionSelectorComponent savecallBack={savecallBack} key={question.qid} selectedQuestionId={questionId} question={question}/>))}
       </div>
     </div>
   );

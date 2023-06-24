@@ -6,7 +6,7 @@ import { Outlet, Link } from "react-router-dom";
 // import { selectedQuestion } from "../redux/actions/courseActions";
 import { getQuestionStatus } from "../util";
 
-const QuestionSelectorComponent = ({ question, selectedQuestionId }) => {
+const QuestionSelectorComponent = ({ question, selectedQuestionId,savecallBack }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const QuestionSelectorComponent = ({ question, selectedQuestionId }) => {
     <div className="grid-item">
       <div className="grid-item-wrapper">
         <Link
-          // onClick={() => dispatch(selectedQuestion(question))}
+          onClick={() => savecallBack()}
           style={{ textDecoration: "none" }}
           to={`/question/${question.qid}`}
         >

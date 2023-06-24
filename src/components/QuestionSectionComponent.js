@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "styled-components";
 import CountDownTimer from "../components/time_counter";
@@ -58,7 +58,7 @@ const QuestionSectionComponent = ({
   answerVal,
   markGuess,
 }) => {
-  console.log(question);
+  
   return (
     <QuestionPanel>
       <div className="general-section countdown">
