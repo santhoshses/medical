@@ -34,20 +34,26 @@ const StyledInstructionsContent = styled.div`
     display: flex;
   }
   .txt-red {
-    color: red
+    color: #FF0000
+  }
+  .instruction-wrapper{
+    margin: 0;
+  }
+  .instruction-table-wrapper {
+    max-height: 48vh;
   }
 `;
 
-const InstructionsComponent = () => {
+const InstructionsComponent = ({hideNote}) => {
     return (
       <StyledInstructionsContent>
-        <p className="note">
+        {!hideNote && (<p className="note">
           Note that timer is running. Kindly close the question paper page to
           attend the questions.
-        </p>
-        <p className="font-sub-heading">Please read the instructions carefully</p>
+        </p>)}
+        <p className={`font-sub-heading ${hideNote && 'instruction-wrapper'}`}>Please read the instructions carefully</p>
         <p className="title"> General Instructions:</p>
-        <div className="table-wrapper">
+        <div className={`table-wrapper ${hideNote && 'instruction-table-wrapper'}`}>
             <div>
                 <ol className="">
                     <li>Total duration of National NEET Mock - 2023  is 180 minutes.</li>
@@ -104,8 +110,33 @@ const InstructionsComponent = () => {
                             <li>
                                 Click on Save & Next to save your answer for the current question and then go to the next question.
                             </li>
+                            <li>
+                                Click on Mark for Review & Next to mark your question for review, and then go to the next question.
+                            </li>
                         </ul>
                     </li>
+                    <li>
+                      <div>
+                         You can view all the questions by clicking on the Question Paper button. Note that the options for multiple choice type questions will not be shown.
+                      </div>
+                      <p className="title"> Answering a Question :</p>
+                    </li>
+                    <li>
+                      Procedure for answering a multiple choice type question:
+                      <ul>
+                        <li>To select your answer, click on the button of one of the options</li>
+                        <li>To deselect your chosen answer, click on the button of the chosen option again or click on the Clear Response button</li>
+                        <li>To change your chosen answer, click on the button of another option</li>
+                        <li> To save your answer, you MUST click on the Save & Next button</li>
+                        <li>To mark the question for review, click on the Mark for Review & Next button. 
+                          <span className="txt-red">If an answer is selected for a question that is Marked for Review, the answer will be considered in the final evaluation.</span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      To change your answer to a question that has already been answered, first select that question for answering and then follow the procedure for answering of question as indicated above.
+                    </li>
+                    <li>Note that ONLY Questions for which answers are saved after answering will be considered for evaluation. This will also include questions that have been answered and marked for review.</li>
                 </ol>
             </div>
         </div>

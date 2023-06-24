@@ -1,4 +1,3 @@
-import {Container, Grid, Box, Tab, Card} from '@mui/material';
 import { styled } from "styled-components";
 import logo from "../assets/png/logo.png";
 import login from "../assets/png/login.png";
@@ -20,7 +19,7 @@ const LoginComponent = () => {
     return (
         <StyledHomeContent>
             <div className='logo-container'>
-                <img src={logo} />
+                <img src={logo} alt='no-img' />
             </div>
             <div className='bg-content'>
                 <LoginCard />

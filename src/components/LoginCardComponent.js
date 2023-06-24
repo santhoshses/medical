@@ -1,4 +1,4 @@
-import {Container, Grid, Box, Tab, Card, TextField} from '@mui/material';
+import {Grid, Card, TextField} from '@mui/material';
 import { useState } from 'react';
 import { styled } from "styled-components";
 import { MuiOtpInput } from 'mui-one-time-password-input';
@@ -91,7 +91,7 @@ const LoginCardComponent = () => {
                 <Grid container className='resend-container'>
                     <Grid><ButtonContained>Resend OTP</ButtonContained></Grid>
                     <Grid className='timer-content'>
-                        <img src={timerIcon} />
+                        <img src={timerIcon} alt='no-img' />
                         <Timer seconds={30} minutes={0} />
                     </Grid>
                 </Grid>

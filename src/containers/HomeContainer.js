@@ -178,6 +178,9 @@ const HomeContainer = () => {
   };
   const handleClick = (status) => {
     dispatch(startTest(topicData.id,topicData.progress.id));
+    if(status.toString() === '0' || status.toString() === '5') {
+      navigate('/instructions');
+    }
     setModalType(status);
     setShowModal(true);
     // navigate("/question/1");
@@ -188,7 +191,7 @@ const HomeContainer = () => {
       <Container>
         <Grid container alignItems="center">
           <Grid xs={9}>
-            <img src={logo} />
+            <img src={logo} alt='no-img' />
           </Grid>
           <Grid xs={3}>
             <Grid container>
@@ -199,7 +202,7 @@ const HomeContainer = () => {
                 <div className="name-sub-container">Paraclinic Year I</div>
               </Grid>
               <Grid>
-                <img src={cardIcon} className="img-container" />
+                <img src={cardIcon} className="img-container" alt='no-img' />
               </Grid>
               <Grid>
                 <a className="logout-link" href="#">
@@ -235,7 +238,7 @@ const HomeContainer = () => {
                   <Card variant="outlined">
                     <Grid container className="card-content">
                       <Grid className="card-img-container">
-                        <img src={cardIcon} className="card-img" />
+                        <img src={cardIcon} className="card-img" alt='no-img' />
                       </Grid>
                       <Grid className="card-main-content">
                         <div className="card-main-content-header">
