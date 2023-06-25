@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import { Container, Grid, Box, Tab, Card, TextField } from "@mui/material";
+import { Grid, Card, TextField } from "@mui/material";
 import { useState } from "react";
-=======
-import {Grid, Card, TextField} from '@mui/material';
-import { useState } from 'react';
->>>>>>> dbe17d3b69b920e5b0aa572dce0cb943b9362b6b
 import { styled } from "styled-components";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import { useNavigate } from "react-router-dom";
@@ -70,7 +65,6 @@ const LoginCardComponent = ({ generateOtpCallback, verifyOtpCallback }) => {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
-<<<<<<< HEAD
   const handleChange = (newValue) => {
     setOtp(newValue);
   };
@@ -107,47 +101,6 @@ const LoginCardComponent = ({ generateOtpCallback, verifyOtpCallback }) => {
       </>
     );
   };
-=======
-    const handleChange = (newValue) => {
-        setOtp(newValue)
-    }
-
-    const getLoginContent = () => {
-        return (
-            <>
-                <div className='login-header'>Login</div>
-                <div className='login-sub-header'>Your Manipal Medace account</div>
-                <TextField type='number' fullWidth label="Mobile Number" id="fullWidth" onChange={(e) => setMobileNumber(e.target.value)} />
-                <div className='login-btn-container'>
-                    <ButtonOutlined disabled={mobileNumber.length === 10 ? false : true} className="login-btn" onClick={() => setIsLogin(false)}>Request OTP</ButtonOutlined>
-                </div>
-            </>
-        );
-    }
-
-    const getOTPContent = () => {
-        return (
-            <>
-                <div className='login-header'>Verify OTP</div>
-                <div className='login-sub-header'>
-                    Enter the OTP sent to +91 {mobileNumber}
-                    <img src={editIcon} alt='no-img' className='edit-number' onClick={() => setIsLogin(true)} />
-                </div>
-                <MuiOtpInput value={otp} onChange={handleChange} />
-                <Grid container className='resend-container'>
-                    <Grid><ButtonContained>Resend OTP</ButtonContained></Grid>
-                    <Grid className='timer-content'>
-                        <img src={timerIcon} alt='no-img' />
-                        <Timer seconds={30} minutes={0} />
-                    </Grid>
-                </Grid>
-                <div className='login-btn-container'>
-                    <ButtonOutlined disabled={otp.length === 4 ? false : true} className="login-btn" onClick={() => {navigate('/home')}}>Verify</ButtonOutlined>
-                </div>
-            </>
-        );
-    }
->>>>>>> dbe17d3b69b920e5b0aa572dce0cb943b9362b6b
 
   const getOTPContent = () => {
     return (
@@ -168,8 +121,8 @@ const LoginCardComponent = ({ generateOtpCallback, verifyOtpCallback }) => {
             <ButtonContained>Resend OTP</ButtonContained>
           </Grid>
           <Grid className="timer-content">
-            <img src={timerIcon} />
-            <Timer seconds={1} minutes={5} />
+            <img src={timerIcon} alt="no-img" />
+            <Timer seconds={30} minutes={0} />
           </Grid>
         </Grid>
         <div className="login-btn-container">
@@ -184,6 +137,8 @@ const LoginCardComponent = ({ generateOtpCallback, verifyOtpCallback }) => {
       </>
     );
   };
+
+ 
 
   return (
     <StyledLoginContent>
