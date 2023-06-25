@@ -6,6 +6,7 @@ import {
   fetchQuestionSummary,
   getCurrentQuestion,
   saveCurrentQuestion,
+  submitCurrentTest,
 } from "../redux/actions/courseActions";
 import { useParams } from "react-router-dom";
 
@@ -64,7 +65,9 @@ const QuestionContainer = () => {
   const [markGuess, setMarkGuess] = React.useState(false);
 
   const storeTestData = useSelector((state) => state?.testDetails);
-  const storeCurrentQuestion = useSelector((state) => state?.testDetails.currentQuestion);
+  const storeCurrentQuestion = useSelector(
+    (state) => state?.testDetails.currentQuestion
+  );
   const testData = storeTestData?.courseTestDetail?.testTopics;
   const courseSummaryData = storeTestData?.courseSummaryData;
 
@@ -104,11 +107,11 @@ const QuestionContainer = () => {
   }, [storeTestData]);
 
   useEffect(() => {
-    // clearCallBack();
-    // setTimeout(() => {
-      setAnswerVal(currentQuestion.userAnswer);
-      setMarkGuess(currentQuestion.guess);
-    // }, 1000);
+    clearCallBack();
+    setTimeout(() => {
+    setAnswerVal(currentQuestion.userAnswer);
+    setMarkGuess(currentQuestion.guess);
+    }, 1000);
   }, [currentQuestion]);
 
   useEffect(() => {
@@ -117,7 +120,6 @@ const QuestionContainer = () => {
         getCurrentQuestion(topicData.id, topicData.progress.id, questionId)
       );
       dispatch(fetchQuestionSummary(topicData.id, topicData.progress.id));
-      
     }, 500);
   }, [questionId]);
 
@@ -132,6 +134,10 @@ const QuestionContainer = () => {
     // alert()
     setAnswerVal("");
     setMarkGuess(false);
+  };
+  const submitTest = () => {
+    alert()
+    dispatch(submitCurrentTest(topicData.id, topicData.progress.id));
   };
   const saveNextQuestion = (marked_review = false) => {
     const pblockid = courseSummaryData[questionId - 1].pblockid;
@@ -188,6 +194,7 @@ const QuestionContainer = () => {
         <FooterComponent
           savecallBack={saveNextQuestion}
           clearCallBack={clearCallBack}
+          submitTestCallBack={submitTest}
         />
       </Footer>
     </PageWrapper>

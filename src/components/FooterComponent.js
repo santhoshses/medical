@@ -29,7 +29,7 @@ border-top: 1px solid #bababa;
   }
   `;
 
-const FooterComponent = ({clearCallBack,savecallBack}) => {
+const FooterComponent = ({clearCallBack,savecallBack, submitTestCallBack}) => {
   return (
     <FooterPanel>
       <div className="left">
@@ -40,7 +40,7 @@ const FooterComponent = ({clearCallBack,savecallBack}) => {
       </div>
       <div className="right">
         <ButtonContained onClick={()=>{savecallBack(false)}}  variant="contained">Save & Next</ButtonContained>
-        <ButtonContained variant="contained">Submit</ButtonContained>
+        <ButtonContained variant="contained" onClick={()=>submitTestCallBack()}>Submit</ButtonContained>
       </div>
     </FooterPanel>
   );

@@ -16,14 +16,14 @@ const StyledHomeContent = styled.div`
         margin-left: 75px;
     }
 `;
-const LoginComponent = () => {
+const LoginComponent = ({generateOtpCallback, verifyOtpCallback}) => {
     return (
         <StyledHomeContent>
             <div className='logo-container'>
                 <img src={logo} />
             </div>
             <div className='bg-content'>
-                <LoginCard />
+                <LoginCard generateOtpCallback={generateOtpCallback} verifyOtpCallback={verifyOtpCallback}/>
             </div>
         </StyledHomeContent>
     )

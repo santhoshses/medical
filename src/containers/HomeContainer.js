@@ -178,9 +178,9 @@ const HomeContainer = () => {
   };
   const handleClick = (status) => {
     dispatch(startTest(topicData.id,topicData.progress.id));
-    setModalType(status);
-    setShowModal(true);
-    // navigate("/question/1");
+    // setModalType(status);
+    // setShowModal(true);
+    navigate("/question/1");
 }
 
   return (
