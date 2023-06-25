@@ -4,7 +4,8 @@ import QuestionContainer from "./containers/QuestionContainer";
 import ScheduledTests from "./containers/ScheduledTests";
 import QuestionSelector from "./containers/QuestionSelectorContainer";
 import HomeContainer from "./containers/HomeContainer";
-import LoginContainer from "./containers/LoginContainer"
+import LoginContainer from "./containers/LoginContainer";
+import InstructionsContainer from "./containers/InstructionsContainer";
 // import { SplitScreen } from "./split_screen/SplitScreen";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/" exact element={<QuestionSelector />}></Route>
           <Route path="/login" exact element={<LoginContainer />}></Route>
           <Route path="/home" exact element={<HomeContainer />}></Route>
+          <Route path="/instructions" exact element={<InstructionsContainer />}></Route>
           <Route
             path="/question/:questionId"
             exact

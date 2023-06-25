@@ -40,7 +40,7 @@ const style = {
   `;
 const HomePageModal = ({open, handleClose, modalType}) => {
     const modalObj = {
-        "0": {
+        "3": {
             header: "Exam is Submited!",
             subHeader: "Login to the Mobile App for viewing the Answers and Analysis.",
             icon: completedLogo
@@ -51,8 +51,8 @@ const HomePageModal = ({open, handleClose, modalType}) => {
             icon: expiredLogo
         },
     }
-    return (
-        <Modal
+    return <>
+        {modalObj[modalType] ? (<Modal
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
@@ -72,8 +72,9 @@ const HomePageModal = ({open, handleClose, modalType}) => {
                         </div>
                     </Box>
                 </StyledHomeModal>
-        </Modal>
-    )
+        </Modal>) : null
+        }
+    </>
 }
 
 export default HomePageModal;
