@@ -158,6 +158,9 @@ const StyledHomeContent = styled.div`
 const HomeContainer = () => {
   // const [value, setValue] = React.useState('1');
   const storeData = useSelector((state) => state);
+  const accessTokenData = useSelector(
+    (state) => state?.authDetails.accessToken
+  );
   const testData = storeData.testDetails?.courseTestDetail?.testTopics;
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
@@ -184,6 +187,11 @@ const HomeContainer = () => {
     setShowModal(true);
     // navigate("/question/1");
 }
+useEffect(() => {
+  if (accessTokenData) {
+    localStorage.setItem("AccessToken", accessTokenData);
+  }
+}, [accessTokenData]);
 
   return (
     <StyledHomeContent>

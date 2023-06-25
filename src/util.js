@@ -5,7 +5,6 @@ import {
   QuestionMarkedReview,
   QuestionAnsweredMarkedReview,
 } from "./StyledIcons";
-
 export const GetCourseStatus = (
   status,
   startTime,
@@ -73,7 +72,6 @@ export const GetCourseStatus = (
       break;
   }
 };
-
 export const getQuestionStatus = (question) => {
   if (question.answer) {
     if (question.marked_view) {
@@ -137,3 +135,16 @@ export const getQuestionStatusCount = (allQuestions) => {
   return statusObj;
   
 };
+
+export const appLogout=()=>{
+  localStorage.setItem("AccessToken", "");
+  localStorage.setItem("RefreshToken", "");
+  window.location.href = '/login';
+}
+
+export const getAccessToken = ()=>{
+  return localStorage.getItem("AccessToken");
+}
+export const getRefreshToken = ()=>{
+  return localStorage.getItem("RefreshToken");
+}

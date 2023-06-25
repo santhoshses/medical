@@ -7,6 +7,7 @@ import {
   getCurrentQuestion,
   saveCurrentQuestion,
   submitCurrentTest,
+  getAllQuestion
 } from "../redux/actions/courseActions";
 import { useParams } from "react-router-dom";
 
@@ -65,13 +66,16 @@ const QuestionContainer = () => {
   const [markGuess, setMarkGuess] = React.useState(false);
 
   const storeTestData = useSelector((state) => state?.testDetails);
+  const accessTokenData = useSelector(
+    (state) => state?.authDetails.accessToken
+  );
   const storeCurrentQuestion = useSelector(
     (state) => state?.testDetails.currentQuestion
   );
   const testData = storeTestData?.courseTestDetail?.testTopics;
   const courseSummaryData = storeTestData?.courseSummaryData;
 
-  let topicData = [];
+  let topicData;
   if (testData?.topics && testData.topics.length) {
     topicData = testData.topics[0];
   }
@@ -79,22 +83,27 @@ const QuestionContainer = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchQuestionSummary(topicData.id, topicData.progress.id));
-    setQuestionStatusCount(getQuestionStatusCount(courseSummaryData));
-    dispatch(
-      getCurrentQuestion(topicData.id, topicData.progress.id, topicData.qid)
-    );
-    const unloadCallback = (event) => {
-      event.preventDefault();
-      event.returnValue =
-        "Data will be lost if you leave the page, are you sure?";
-      return "";
-    };
-    window.addEventListener("beforeunload", unloadCallback);
-
-    return () => {
-      window.removeEventListener("beforeunload", unloadCallback);
-    };
+    if(topicData){
+      // navigate("/home");
+      dispatch(fetchQuestionSummary(topicData.id, topicData.progress.id));
+      setQuestionStatusCount(getQuestionStatusCount(courseSummaryData));
+      dispatch(
+        getCurrentQuestion(topicData.id, topicData.progress.id, topicData.qid)
+      );
+      dispatch(getAllQuestion(topicData.id, topicData.progress.id, topicData.qid));
+      const unloadCallback = (event) => {
+        event.preventDefault();
+        event.returnValue =
+          "Data will be lost if you leave the page, are you sure?";
+        return "";
+      };
+      window.addEventListener("beforeunload", unloadCallback);
+  
+      return () => {
+        window.removeEventListener("beforeunload", unloadCallback);
+      };
+    }
+   
   }, []);
 
   useEffect(() => {
@@ -109,19 +118,31 @@ const QuestionContainer = () => {
   useEffect(() => {
     clearCallBack();
     setTimeout(() => {
-    setAnswerVal(currentQuestion.userAnswer);
-    setMarkGuess(currentQuestion.guess);
+      setAnswerVal(currentQuestion.userAnswer);
+      setMarkGuess(currentQuestion.guess);
     }, 1000);
   }, [currentQuestion]);
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(
-        getCurrentQuestion(topicData.id, topicData.progress.id, questionId)
-      );
-      dispatch(fetchQuestionSummary(topicData.id, topicData.progress.id));
+      if(topicData){
+        dispatch(
+          getCurrentQuestion(topicData.id, topicData.progress.id, questionId)
+        );
+        dispatch(fetchQuestionSummary(topicData.id, topicData.progress.id));
+      }
+      else{
+        navigate('/home')
+      }
+     
     }, 500);
   }, [questionId]);
+
+  useEffect(() => {
+    if (accessTokenData) {
+      localStorage.setItem("AccessToken", accessTokenData);
+    }
+  }, [accessTokenData]);
 
   const updateAnswer = (ev) => {
     if (ev.target.type == "radio") {
@@ -131,12 +152,10 @@ const QuestionContainer = () => {
     }
   };
   const clearCallBack = (ev) => {
-    // alert()
     setAnswerVal("");
     setMarkGuess(false);
   };
   const submitTest = () => {
-    alert()
     dispatch(submitCurrentTest(topicData.id, topicData.progress.id));
   };
   const saveNextQuestion = (marked_review = false) => {
@@ -195,6 +214,7 @@ const QuestionContainer = () => {
           savecallBack={saveNextQuestion}
           clearCallBack={clearCallBack}
           submitTestCallBack={submitTest}
+          questionStatusCount={questionStatusCount}
         />
       </Footer>
     </PageWrapper>

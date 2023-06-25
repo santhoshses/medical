@@ -75,7 +75,7 @@ const LoginCardComponent = ({ generateOtpCallback, verifyOtpCallback }) => {
   const verifyOtpMethod = () => {
     setIsLogin(true);
     verifyOtpCallback(otp, mobileNumber);
-    navigate("/home");
+    // navigate("/home");
   };
   const getLoginContent = () => {
     return (

@@ -5,6 +5,7 @@ const initialState = {
   courseSummaryData: [],
   currentQuestion: [],
   testSubmitStatus:false,
+  allQuestions:[]
 };
 export const courseReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -16,6 +17,9 @@ export const courseReducer = (state = initialState, { type, payload }) => {
       return { ...state, currentQuestion: payload };
     case ActionTypes.TEST_SUBMIT_STATUS:
       return { ...state, testSubmitStatus: payload };
+      case ActionTypes.SET_ALL_QUESTION:
+        return { ...state, allQuestions: payload };
+      
 
     default:
       return state;

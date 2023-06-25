@@ -52,8 +52,8 @@ const StyledQuestionPaperContent = styled.div`
 `;
 
 const QuestionPaperContent = () => {
-  const allQuestionsObj = useSelector((state) => state);
-  const questions = allQuestionsObj["allQuestions"]?.questions;
+  const storeTestData = useSelector((state) => state?.testDetails);
+  const questions = storeTestData.allQuestions;
   return (
     <StyledQuestionPaperContent>
       <p className="note">
@@ -63,11 +63,11 @@ const QuestionPaperContent = () => {
       <p className="title"> National NEET Mock - 2023</p>
       <div className="table-wrapper">
         <table style={{ width: "100%" }}>
-          {questions.map((item) => {
+          {questions.map((item,i) => {
             return (
               <tr>
-                <td style={{ width: "10%" }}>{item.id}</td>
-                <td style={{ width: "90%" }}>{item.description}</td>
+                <td style={{ width: "10%",textAlign:"center" }}>{i+1}</td>
+                <td style={{ width: "90%" }}>{item}</td>
               </tr>
             );
           })}

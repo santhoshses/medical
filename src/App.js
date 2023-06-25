@@ -8,6 +8,8 @@ import LoginContainer from "./containers/LoginContainer";
 import InstructionsContainer from "./containers/InstructionsContainer";
 // import { SplitScreen } from "./split_screen/SplitScreen";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // const LeftHandComponent = ({ name }) => {
 //   return <h1 style={{ backgroundColor: "green" }}>{name}</h1>;
@@ -39,6 +41,7 @@ function App() {
 
   return (
       <Router>
+         <ToastContainer />
         <Routes >
           <Route path="/" exact element={<QuestionSelector />}></Route>
           <Route path="/login" exact element={<LoginContainer />}></Route>

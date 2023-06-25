@@ -1,20 +1,55 @@
-import LoginComponent from '../components/LoginComponent';
+import React, { useEffect, useState } from "react";
+import LoginComponent from "../components/LoginComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { generateOtp, verifyOtp } from '../redux/actions/courseActions';
+import { generateOtp, verifyOtp } from "../redux/actions/loginActions";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getAccessToken, getRefreshToken } from "../util";
 
 const LoginContainer = () => {
-    const dispatch = useDispatch();
-    const generateOtpMethod =(phone)=>{
-        dispatch(generateOtp(phone));
+  const accessTokenData = useSelector(
+    (state) => state?.authDetails.accessToken
+  );
+  const refreshTokenData = useSelector(
+    (state) => state?.authDetails.refreshToken
+  );
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(getAccessToken()){
+        navigate("/home");
     }
-    const verifyOtpMethod =(otp,phone)=>{
-        dispatch(verifyOtp(otp,phone));
+    if (accessTokenData && location.pathname == "/login") {
+      localStorage.setItem("AccessToken", accessTokenData);
+      navigate("/home");
     }
-    return (
-        <div>
-            <LoginComponent generateOtpCallback={generateOtpMethod} verifyOtpCallback={verifyOtpMethod} />
-        </div>
-    );
-}
+  }, [accessTokenData]);
+
+  useEffect(() => {
+    if(getRefreshToken()){
+        navigate("/home");
+    }
+    if (refreshTokenData && location.pathname == "/login") {
+      localStorage.setItem("RefreshToken", refreshTokenData);
+      navigate("/home");
+    }
+  }, [refreshTokenData]);
+
+  const generateOtpMethod = (phone) => {
+    dispatch(generateOtp(phone));
+  };
+  const verifyOtpMethod = (otp, phone) => {
+    dispatch(verifyOtp(otp, phone));
+  };
+  return (
+    <div>
+      <LoginComponent
+        generateOtpCallback={generateOtpMethod}
+        verifyOtpCallback={verifyOtpMethod}
+      />
+    </div>
+  );
+};
 
 export default LoginContainer;
