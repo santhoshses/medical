@@ -18,6 +18,9 @@ const QuestionSummaryComponent = ({questionStatusCount}) => {
       height: 10vh;
       margin: auto;
     }
+    .user-name {
+      margin: auto;
+    }
   `;
   const GridRow = styled.div`
     height: 10vh;
@@ -52,7 +55,7 @@ const QuestionSummaryComponent = ({questionStatusCount}) => {
         <GridCell className="img-wrapper">
           <img src='/images/Unsplash.png' alt='no-img' className="img-wrapper" />          
         </GridCell>
-        <GridCell>Narendranath</GridCell>
+        <GridCell><label className="user-name">Narendranath</label></GridCell>
       </GridRow>
       <GridRow>
         <GridCell>
