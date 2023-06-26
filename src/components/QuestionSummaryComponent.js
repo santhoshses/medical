@@ -14,6 +14,10 @@ const QuestionSummaryComponent = ({questionStatusCount}) => {
     display: flex;
     height: 32vh;
     flex-direction: column;
+    .img-wrapper > img{
+      height: 10vh;
+      margin: auto;
+    }
   `;
   const GridRow = styled.div`
     height: 10vh;
@@ -45,8 +49,10 @@ const QuestionSummaryComponent = ({questionStatusCount}) => {
   return (
     <GridContainer>
       <GridRow>
-        <GridCell></GridCell>
-        <GridCell></GridCell>
+        <GridCell className="img-wrapper">
+          <img src='/images/Unsplash.png' alt='no-img' className="img-wrapper" />          
+        </GridCell>
+        <GridCell>Narendranath</GridCell>
       </GridRow>
       <GridRow>
         <GridCell>

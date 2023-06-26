@@ -71,6 +71,9 @@ const QuestionSectionComponent = ({
 
       <div className="question-section">
         <div className="question">{question?.question?.text}</div>
+        <div className="img-container">
+          <img src='/images/disease.png' alt='no-img' />
+        </div>
         <FormControl className="form-control">
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
