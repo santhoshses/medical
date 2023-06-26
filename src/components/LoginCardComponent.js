@@ -87,6 +87,7 @@ const LoginCardComponent = ({ generateOtpCallback, verifyOtpCallback }) => {
           fullWidth
           label="Mobile Number"
           id="fullWidth"
+          value={mobileNumber}
           onChange={(e) => setMobileNumber(e.target.value)}
         />
         <div className="login-btn-container">
@@ -112,7 +113,7 @@ const LoginCardComponent = ({ generateOtpCallback, verifyOtpCallback }) => {
             src={editIcon}
             alt="no-img"
             className="edit-number"
-            onClick={() => setIsLogin(true)}
+            onClick={() => {setIsLogin(true);setOtp('')}}
           />
         </div>
         <MuiOtpInput value={otp} onChange={handleChange} />
